@@ -1,0 +1,2 @@
+SampleSize,NumWorkers,TiempoCarga_s,TiempoCalculo_s,TiempoRecomendacion_s,TiempoTotal_s,TargetUserID,Recommendations
+30000,24,1.945577,517.973659,0.072672,519.991908,68259,"Monster's Ball (2001)|Cable Guy, The (1996)|Ransom (1996)|Thomas Crown Affair, The (1999)|Double Jeopardy (1999)|Quills (2000)|Mumford (1999)"

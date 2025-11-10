@@ -1,0 +1,2 @@
+SampleSize,NumWorkers,TiempoCarga_s,TiempoCalculo_s,TiempoRecomendacion_s,TiempoTotal_s,TargetUserID,Recommendations
+50000,16,1.873153,2563.547157,0.115086,2565.535396,67385,"Twilight Zone: The Movie (1983)|Absolute Power (1997)|Before and After (1996)|Mimic (1997)|Bamboozled (2000)|Night Falls on Manhattan (1996)|Glass House, The (2001)"

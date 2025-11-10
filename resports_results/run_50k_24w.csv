@@ -1,0 +1,2 @@
+SampleSize,NumWorkers,TiempoCarga_s,TiempoCalculo_s,TiempoRecomendacion_s,TiempoTotal_s,TargetUserID,Recommendations
+50000,24,1.873153,2547.008029,0.072155,2548.953338,67385,"Twilight Zone: The Movie (1983)|Absolute Power (1997)|Clay Pigeons (1998)|Chamber, The (1996)|Cradle Will Rock (1999)|Freeway (1996)|Mimic (1997)"

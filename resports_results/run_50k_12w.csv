@@ -1,0 +1,2 @@
+SampleSize,NumWorkers,TiempoCarga_s,TiempoCalculo_s,TiempoRecomendacion_s,TiempoTotal_s,TargetUserID,Recommendations
+50000,12,1.891992,2711.059706,0.250590,2713.202288,59269,"Jacob's Ladder (1990)|Hunger, The (1983)|Rapture, The (1991)|Needful Things (1993)|Maria Full of Grace (Maria, Llena eres de gracia) (2004)|Thinner (1996)|Phantasm (1979)"

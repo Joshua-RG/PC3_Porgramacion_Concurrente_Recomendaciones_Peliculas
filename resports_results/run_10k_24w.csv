@@ -1,0 +1,2 @@
+SampleSize,NumWorkers,TiempoCarga_s,TiempoCalculo_s,TiempoRecomendacion_s,TiempoTotal_s,TargetUserID,Recommendations
+10000,24,1.994005,39.421581,0.003515,41.419101,68259,"Monster's Ball (2001)|Bruce Almighty (2003)|Shanghai Noon (2000)|American Pie (1999)|King Kong (1976)|Jaws 2 (1978)|Whole Nine Yards, The (2000)"

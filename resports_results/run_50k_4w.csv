@@ -1,0 +1,2 @@
+SampleSize,NumWorkers,TiempoCarga_s,TiempoCalculo_s,TiempoRecomendacion_s,TiempoTotal_s,TargetUserID,Recommendations
+50000,4,1.891992,3065.402688,0.049766,3067.344446,59269,"Rapture, The (1991)|Needful Things (1993)|Jacob's Ladder (1990)|Hunger, The (1983)|Maria Full of Grace (Maria, Llena eres de gracia) (2004)|Serpent and the Rainbow, The (1988)|Dreamcatcher (2003)"

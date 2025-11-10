@@ -1,0 +1,2 @@
+SampleSize,NumWorkers,TiempoCarga_s,TiempoCalculo_s,TiempoRecomendacion_s,TiempoTotal_s,TargetUserID,Recommendations
+30000,16,1.945577,515.783665,0.386126,518.115369,68259,"Eyes Wide Shut (1999)|Quills (2000)|Cable Guy, The (1996)|Mumford (1999)|Thomas Crown Affair, The (1999)|Double Jeopardy (1999)|Ransom (1996)"

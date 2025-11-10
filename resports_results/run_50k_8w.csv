@@ -1,0 +1,2 @@
+SampleSize,NumWorkers,TiempoCarga_s,TiempoCalculo_s,TiempoRecomendacion_s,TiempoTotal_s,TargetUserID,Recommendations
+50000,8,1.873153,2481.197793,0.094487,2483.165433,67385,"Twilight Zone: The Movie (1983)|Absolute Power (1997)|Angel Eyes (2001)|Glass House, The (2001)|Feeling Minnesota (1996)|Sunshine (1999)|Cookie's Fortune (1999)"

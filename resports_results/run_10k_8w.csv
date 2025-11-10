@@ -1,0 +1,2 @@
+SampleSize,NumWorkers,TiempoCarga_s,TiempoCalculo_s,TiempoRecomendacion_s,TiempoTotal_s,TargetUserID,Recommendations
+10000,8,1.994005,43.915126,0.002000,45.911130,68259,"Shanghai Noon (2000)|Monster's Ball (2001)|American Pie (1999)|Bruce Almighty (2003)|Beavis and Butt-Head Do America (1996)|Eraser (1996)|Maltese Falcon, The (a.k.a. Dangerous Female) (1931)"

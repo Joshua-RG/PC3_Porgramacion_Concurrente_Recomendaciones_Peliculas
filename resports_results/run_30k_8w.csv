@@ -1,0 +1,2 @@
+SampleSize,NumWorkers,TiempoCarga_s,TiempoCalculo_s,TiempoRecomendacion_s,TiempoTotal_s,TargetUserID,Recommendations
+30000,8,1.945577,543.344090,0.013936,545.303604,68259,"Double Jeopardy (1999)|Thomas Crown Affair, The (1999)|Mumford (1999)|Ransom (1996)|Quills (2000)|Monster's Ball (2001)|Cable Guy, The (1996)"
