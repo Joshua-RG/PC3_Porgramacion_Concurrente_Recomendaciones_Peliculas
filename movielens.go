@@ -16,20 +16,18 @@ import (
 	"time"
 )
 
-// --- CAMBIO: Estructura de Mapa Seguro con Mutex ---
-// Esto reemplaza la necesidad de un 'collector'
+// Estructura de Mapa Seguro con Mutex 
 type SafeSimilarityMap struct {
-	mu   sync.Mutex // El "candado"
+	mu   sync.Mutex 
 	data map[string][]SimilarityScore
 }
 
-// Método para agregar un resultado de forma segura (concurrente)
+// Método para agregar un resultado de forma segura 
 func (s *SafeSimilarityMap) Add(result Result) {
-	s.mu.Lock() // <-- Poner el candado
-	// Esta sección de código está protegida.
+	s.mu.Lock() 
 	s.data[result.UserA_ID] = append(s.data[result.UserA_ID], SimilarityScore{UserID: result.UserB_ID, Score: result.Score})
 	s.data[result.UserB_ID] = append(s.data[result.UserB_ID], SimilarityScore{UserID: result.UserA_ID, Score: result.Score})
-	s.mu.Unlock() // <-- Quitar el candado
+	s.mu.Unlock() 
 }
 
 // Estructuras de datos para MovieLens
@@ -46,19 +44,19 @@ type Recommendation struct {
 	Score int
 }
 
-// CAMBIO: Struct de resultados con más métricas
+// Struct de resultados con más métricas
 type RunResult struct {
 	SampleSize      int
-	NumWorkers      int           // MÉTRICA NUEVA
-	DurationLoad    time.Duration // MÉTRICA NUEVA
-	DurationCalc    time.Duration // MÉTRICA NUEVA
-	DurationRec     time.Duration // MÉTRICA NUEVA
+	NumWorkers      int           
+	DurationLoad    time.Duration 
+	DurationCalc    time.Duration 
+	DurationRec     time.Duration 
 	DurationTotal   time.Duration
 	TargetUserID    string
 	Recommendations []string
 }
 
-// Estructuras del Pipeline (Job se mantiene)
+// Estructuras del Pipeline 
 type Job struct {
 	UserA_ID string
 	UserB_ID string
@@ -69,7 +67,7 @@ type Result struct { // Usado solo para pasar datos al método Add
 	Score    float64
 }
 
-// --- CAMBIO: Funciones de carga ahora devuelven el tiempo ---
+// Funciones de carga, devuelven el tiempo 
 func loadRatings(filePath string) (UserRatings, []string, time.Duration) {
 	start := time.Now()
 	fmt.Println("Iniciando la carga de ratings (ratings.dat)...")
@@ -146,7 +144,7 @@ func loadMovies(filePath string) (MovieData, time.Duration) {
 	return movieData, duration
 }
 
-// Lógica de Similitud (sin cambios)
+// Lógica de Similitud 
 func cosineSimilarity(ratingsA, ratingsB map[string]float64) float64 {
 	dotProduct := 0.0
 	normA_sq := 0.0
@@ -170,7 +168,7 @@ func cosineSimilarity(ratingsA, ratingsB map[string]float64) float64 {
 	return dotProduct / (math.Sqrt(normA_sq) * math.Sqrt(normB_sq))
 }
 
-// Lógica de Recomendación (sin cambios)
+// Lógica de Recomendación 
 func generateRecommendations(targetUserID string, similarityMap map[string][]SimilarityScore, userRatings UserRatings, n int, k int) ([]Recommendation, time.Duration) {
 	start := time.Now()
 	targetSimilarities, ok := similarityMap[targetUserID]
@@ -210,7 +208,8 @@ func generateRecommendations(targetUserID string, similarityMap map[string][]Sim
 }
 
 // COMPONENTES DEL PIPELINE CONCURRENTE
-// (Generator no tiene cambios)
+
+// Generator
 func generator(userIDs []string, jobs chan<- Job) {
 	defer close(jobs)
 	for i := 0; i < len(userIDs); i++ {
@@ -221,8 +220,7 @@ func generator(userIDs []string, jobs chan<- Job) {
 	fmt.Println("\n¡Generator terminó de crear todos los jobs!")
 }
 
-// --- CAMBIO: 'worker' ahora escribe en el Mapa Seguro ---
-// Ya no necesita el canal 'results'
+// worker escribe en el Mapa Seguro 
 func worker(userRatings UserRatings, jobs <-chan Job, safeMap *SafeSimilarityMap, wg *sync.WaitGroup) {
 	defer wg.Done()
 	for job := range jobs {
@@ -231,20 +229,16 @@ func worker(userRatings UserRatings, jobs <-chan Job, safeMap *SafeSimilarityMap
 		score := cosineSimilarity(ratingsA, ratingsB)
 
 		if score > 0 {
-			// Escribimos directamente en el mapa protegido
 			result := Result{UserA_ID: job.UserA_ID, UserB_ID: job.UserB_ID, Score: score}
 			safeMap.Add(result)
 		}
 	}
 }
 
-// --- CAMBIO: El 'collector' se ha ELIMINADO ---
-
-// --- CAMBIO: Función principal del pipeline ---
-// Ahora crea el SafeSimilarityMap y no usa 'results' ni 'collector'
+// crea el SafeSimilarityMap y no usa 'results' ni 'collector'
 func calculateAllSimilaritiesConcurrent(userRatings UserRatings, userIDs []string, numWorkers int) (map[string][]SimilarityScore, time.Duration) {
 	start := time.Now()
-	jobs := make(chan Job, 1000) // El buffer de jobs se mantiene
+	jobs := make(chan Job, 1000) 
 	var wg sync.WaitGroup
 
 	// 1. Creamos nuestro Mapa Seguro
@@ -264,7 +258,6 @@ func calculateAllSimilaritiesConcurrent(userRatings UserRatings, userIDs []strin
 	}
 
 	// 4. Esperamos que los workers terminen
-	// (El generator cierra 'jobs', los workers se vacían y terminan)
 	wg.Wait()
 	fmt.Println("¡Todos los workers han terminado!")
 
@@ -273,7 +266,7 @@ func calculateAllSimilaritiesConcurrent(userRatings UserRatings, userIDs []strin
 	return safeMap.data, duration
 }
 
-// --- CAMBIO: writeResultsToCSV actualizado con las nuevas métricas ---
+// guardar resultados a csv
 func writeResultsToCSV(results []RunResult, filename string) {
 	fmt.Printf("\nGuardando resultados en el archivo %s...\n", filename)
 	file, err := os.Create(filename)
@@ -284,7 +277,6 @@ func writeResultsToCSV(results []RunResult, filename string) {
 	writer := csv.NewWriter(file)
 	defer writer.Flush()
 
-	// Nuevos encabezados
 	header := []string{
 		"SampleSize",
 		"NumWorkers",
@@ -317,24 +309,22 @@ func writeResultsToCSV(results []RunResult, filename string) {
 	fmt.Println("Resultados guardados exitosamente.")
 }
 
-// --- CAMBIO: 'main' actualizado con flags y nuevas métricas ---
-// --- CAMBIO: 'main' actualizado para testear múltiples workers ---
 func main() {
-	// --- 1. Configuración con Flags ---
-	// Definimos los flags que el usuario puede pasar
+	// 1. Configuración con Flags 
+
+	// Definimos los flags 
 	sampleSizeFlag := flag.Int("size", 0, "Número de registros a procesar. 0 para usar el dataset entero.")
 	outputFileFlag := flag.String("output", "benchmark", "Prefijo para los archivos CSV de salida (ej. 'benchmark' -> 'benchmark_8w.csv').")
 	
-	// El flag de worker se elimina
-	flag.Parse() // Leemos los flags
+	// Leemos los flags
+	flag.Parse() 
 
-	// --- NUEVO: Arreglo de Conteo de Workers a Probar ---
-	// Puedes modificar este arreglo con los valores que quieras testear
+	// Arreglo de Conteo de Workers a Probar 
 	workerCounts := []int{4, 12, 20} 
 
-	// --- 2. Carga de Datos (Se hace UNA SOLA VEZ) ---
+	// 2. Carga de Datos 
 	startLoad := time.Now()
-	// Asegúrate de que las rutas a tus archivos .dat sean correctas
+
 	movieData, _ := loadMovies("./ml-10M100K/movies.dat")
 	userRatings, userIDs, _ := loadRatings("./ml-10M100K/ratings.dat")
 	durationLoad := time.Since(startLoad)
@@ -343,7 +333,7 @@ func main() {
 		log.Fatal("No se encontraron usuarios en el dataset. Saliendo.")
 	}
 
-	// --- 3. Selección de Muestra (Sample) (Se hace UNA SOLA VEZ) ---
+	// 3. Selección de Muestra (Sample) 
 	var sampleUserIDs []string
 	sampleSize := *sampleSizeFlag
 
@@ -361,7 +351,7 @@ func main() {
 		sampleUserIDs = userIDs[:sampleSize]
 	}
 
-	// 4. Seleccionar Usuario Objetivo (Se hace UNA SOLA VEZ)
+	// 4. Seleccionar Usuario Objetivo 
 	var targetUser string
 	maxRatings := -1
 	for _, userID := range sampleUserIDs {
@@ -373,19 +363,18 @@ func main() {
 	fmt.Printf("Usuario objetivo seleccionado (con %d ratings): %s\n", maxRatings, targetUser)
 
 
-	// --- 5. Bucle de Ejecución del Benchmark ---
+	// 5. Bucle de Ejecución del Benchmark 
 	fmt.Println("\n=============================================")
 	fmt.Printf(" INICIANDO PRUEBAS DE BENCHMARK (Size=%d)\n", sampleSize)
 	fmt.Println("=============================================")
 
-	var allResults []RunResult // Para guardar todos los resultados para el resumen final
+	var allResults []RunResult 
 
 	// Bucle sobre cada conteo de workers
 	for _, numWorkers := range workerCounts {
 		
 		fmt.Printf("\n--- Iniciando prueba con %d WORKERS ---\n", numWorkers)
 
-		// --- LLAMADAS A LAS FUNCIONES CON TIMING ---
 		similarityMap, durationCalc := calculateAllSimilaritiesConcurrent(userRatings, sampleUserIDs, numWorkers)
 		recommendations, durationRec := generateRecommendations(targetUser, similarityMap, userRatings, 10, 7)
 
@@ -399,7 +388,7 @@ func main() {
 
 		fmt.Printf("\nTiempo total (cálculo + recomendación) para %d workers: %v\n", numWorkers, durationTotal)
 
-		// Guardar el resultado de esta corrida
+		// Guardar el resultado de esta ejecucion
 		result := RunResult{
 			SampleSize:      sampleSize,
 			NumWorkers:      numWorkers,
@@ -410,9 +399,9 @@ func main() {
 			TargetUserID:    targetUser,
 			Recommendations: recNames,
 		}
-		allResults = append(allResults, result) // Guardamos para el resumen final
+		allResults = append(allResults, result) 
 
-		// --- 6. Resumen y Guardado (DENTRO DEL BUCLE) ---
+		// 6. Resumen y Guardado 
 		fmt.Println("\n-------------------------------------------------------------------------------------------------------")
 		fmt.Printf("                          RESUMEN DE LA EJECUCIÓN (Workers: %d)\n", numWorkers)
 		fmt.Println("-------------------------------------------------------------------------------------------------------")
@@ -424,14 +413,12 @@ func main() {
 		fmt.Printf("%-20s | %-15.4f\n", "TIEMPO TOTAL", result.DurationTotal.Seconds())
 		fmt.Println("-------------------------------------------------------------------------------------------------------")
 
-		// Generar nombre de archivo dinámico
 		outputFilename := fmt.Sprintf("%s_%dw.csv", *outputFileFlag, numWorkers)
-		
-		// Escribir en un CSV *separado* para esta prueba
+	
 		writeResultsToCSV([]RunResult{result}, outputFilename)
 	}
 
-	// --- 7. Resumen Final de Todas las Pruebas (FUERA DEL BUCLE) ---
+	// 7. Resumen Final de Todas las Pruebas 
 	fmt.Println("\n=======================================================================================================")
 	fmt.Printf("                       RESUMEN FINAL DE BENCHMARK (SampleSize: %d)\n", sampleSize)
 	fmt.Println("=======================================================================================================")

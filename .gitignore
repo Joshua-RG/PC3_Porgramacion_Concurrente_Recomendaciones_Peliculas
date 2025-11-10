@@ -3,5 +3,7 @@ ml-10M100K/
 
 venv/
 
+pc3_u202121973/
+
 # Ignorar el archivo ejecutable compilado
 movielens.exe
