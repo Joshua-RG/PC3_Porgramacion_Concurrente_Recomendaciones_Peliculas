@@ -1,0 +1,2 @@
+SampleSize,NumWorkers,TiempoCarga_s,TiempoCalculo_s,TiempoRecomendacion_s,TiempoTotal_s,TargetUserID,Recommendations
+30000,12,1.948522,509.010237,0.012324,510.971083,67385,"Absolute Power (1997)|True Crime (1999)|Star 80 (1983)|Cradle Will Rock (1999)|Twilight Zone: The Movie (1983)|Possession (2002)|Siege, The (1998)"

@@ -1,0 +1,2 @@
+SampleSize,NumWorkers,TiempoCarga_s,TiempoCalculo_s,TiempoRecomendacion_s,TiempoTotal_s,TargetUserID,Recommendations
+30000,20,1.948522,501.080648,0.015907,503.045077,67385,"Absolute Power (1997)|Siege, The (1998)|Hope Floats (1998)|Dangerous Beauty (1998)|Before Night Falls (2000)|Glass House, The (2001)|Star 80 (1983)"

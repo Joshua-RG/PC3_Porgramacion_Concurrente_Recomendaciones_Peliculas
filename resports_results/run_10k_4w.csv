@@ -1,0 +1,2 @@
+SampleSize,NumWorkers,TiempoCarga_s,TiempoCalculo_s,TiempoRecomendacion_s,TiempoTotal_s,TargetUserID,Recommendations
+10000,4,1.956343,70.864870,0.002008,72.823221,27468,"North by Northwest (1959)|Pearl Harbor (2001)|Four Weddings and a Funeral (1994)|Titanic (1997)|Erin Brockovich (2000)|Notting Hill (1999)|Beach, The (2000)"

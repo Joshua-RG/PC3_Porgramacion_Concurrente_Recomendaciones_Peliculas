@@ -1,0 +1,2 @@
+SampleSize,NumWorkers,TiempoCarga_s,TiempoCalculo_s,TiempoRecomendacion_s,TiempoTotal_s,TargetUserID,Recommendations
+30000,4,1.948522,731.187598,0.043093,733.179213,67385,"Absolute Power (1997)|Angel Eyes (2001)|Before Night Falls (2000)|Siege, The (1998)|Star 80 (1983)|True Crime (1999)|Possession (2002)"

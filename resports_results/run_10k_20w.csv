@@ -1,0 +1,2 @@
+SampleSize,NumWorkers,TiempoCarga_s,TiempoCalculo_s,TiempoRecomendacion_s,TiempoTotal_s,TargetUserID,Recommendations
+10000,20,1.956343,39.841617,0.002508,41.800468,27468,"Four Weddings and a Funeral (1994)|Erin Brockovich (2000)|Titanic (1997)|Pearl Harbor (2001)|North by Northwest (1959)|English Patient, The (1996)|Beach, The (2000)"

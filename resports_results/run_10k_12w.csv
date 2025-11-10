@@ -1,0 +1,2 @@
+SampleSize,NumWorkers,TiempoCarga_s,TiempoCalculo_s,TiempoRecomendacion_s,TiempoTotal_s,TargetUserID,Recommendations
+10000,12,1.956343,41.843654,0.003008,43.803005,27468,North by Northwest (1959)|Titanic (1997)|Four Weddings and a Funeral (1994)|Pearl Harbor (2001)|Erin Brockovich (2000)|Billy Elliot (2000)|Punch-Drunk Love (2002)
