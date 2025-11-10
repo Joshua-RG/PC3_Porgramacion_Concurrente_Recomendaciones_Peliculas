@@ -1,5 +1,7 @@
 # Ignorar la carpeta del dataset, es muy pesada
 ml-10M100K/
 
+venv/
+
 # Ignorar el archivo ejecutable compilado
 movielens.exe
